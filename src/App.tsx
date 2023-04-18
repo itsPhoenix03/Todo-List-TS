@@ -1,26 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import AddTasks from "./Components/AddTasks/AddTasks";
+import { Task, saveTasks } from "./Models";
+import TasksList from "./Components/TasksList/TasksList";
 
-function App() {
+const App: React.FC = () => {
+  const [taskTitle, setTaskTitle] = useState<string>("");
+  const [taskNote, setTaskNote] = useState<string>("");
+
+  const getTasks = localStorage.getItem("tasks");
+  const [tasks, setTasks] = useState<Task[]>(
+    getTasks == null ? [] : JSON.parse(getTasks)
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (taskTitle) {
+      const newTask: Task = {
+        _id: new Date(),
+        taskTitle,
+        taskNote,
+        isCompleted: false,
+      };
+      setTasks([...tasks, newTask]);
+
+      saveTasks([...tasks, newTask]);
+      setTaskTitle("");
+      setTaskNote("");
+    }
+  };
+  console.log(tasks);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="title">
+        Tra<span style={{ color: "#389393" }}>k</span>er Tas
+        <span style={{ color: "#389393" }}>k</span>
+      </h1>
+
+      <AddTasks
+        taskTitle={taskTitle}
+        setTaskTitle={setTaskTitle}
+        taskNote={taskNote}
+        setTaskNote={setTaskNote}
+        handleSubmit={handleSubmit}
+      />
+
+      <TasksList tasks={tasks} setTasks={setTasks} />
     </div>
   );
-}
+};
 
 export default App;
