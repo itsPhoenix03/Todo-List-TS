@@ -4,7 +4,7 @@
   padding: 10px;
 
   height: 6rem;
-  width: 47%;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -19,13 +19,14 @@
 
   border: 1px solid var(--primary-color);
   border-radius: 5px;
-  /* z-index: 1; */
+  /* z-index: 0; */
   transition: all 0.5s ease-in-out;
 }
 
 .task-container:hover {
   background-color: rgba(56, 147, 147, 0.202);
   border: 1px solid var(--secondary-color);
+  scale: 1.02;
   /* box-shadow: 0.5px 0.5px 0.5px 0.5px var(--secondary-color); */
 }
 
@@ -58,7 +59,7 @@
 
 .task-upper {
   height: 40%;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 
 .task-left-section input {
@@ -109,9 +110,14 @@
   color: var(--secondary-color);
 }
 
+.dragging {
+  background-color: rgba(56, 147, 147, 0.102);
+  border: 1px solid var(--secondary-color-less-opacity);
+}
+
 @media (max-width: 1000px) {
   .task-container {
-    width: 43%;
+    width: 100%;
     height: auto;
 
     flex-direction: column;
@@ -122,11 +128,14 @@
   }
 
   .task-container:hover {
-    border: none;
+    border: 1px solid var(--primary-color);
+    background-color: rgba(56, 147, 147, 0.102);
+    scale: 1;
   }
 
   .isCompleted {
     border: 1px solid var(--primary-color);
+    background-color: rgba(56, 147, 147, 0.102);
   }
 
   .task-left-section {
@@ -146,7 +155,7 @@
   }
 
   .task-lower {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--secondary-color);
   }
 
