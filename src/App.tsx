@@ -30,7 +30,6 @@ const App: React.FC = () => {
       setTaskNote("");
     }
   };
-  console.log(tasks);
 
   return (
     <div className="App">
