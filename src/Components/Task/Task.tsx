@@ -15,11 +15,11 @@ const TaskTemplate = ({ task, tasks, setTasks }: Props) => {
   const [editTitle, setEditTitle] = useState(task.taskTitle);
 
   const handleEdit = (id: Date) => {
-    setTasks(
-      tasks.map((task) =>
-        task._id === id ? { ...task, taskTitle: editTitle } : task
-      )
+    const updatedTaskTitle = tasks.map((task) =>
+      task._id === id ? { ...task, taskTitle: editTitle } : task
     );
+    setTasks(updatedTaskTitle);
+    saveTasks([...updatedTaskTitle]);
     // setIsEditable(false);
   };
 
