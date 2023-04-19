@@ -20,7 +20,7 @@ const TasksList = ({
   return (
     <>
       <div className="wrapper-container">
-        <Droppable droppableId="markNotCompleted">
+        <Droppable droppableId="uncompleted">
           {(provided) => (
             <div
               className="new-tasks-container"
@@ -36,7 +36,7 @@ const TasksList = ({
                     task={task}
                     tasks={tasks}
                     setTasks={setTasks}
-                    key={`${task._id}`}
+                    key={task._id}
                   />
                 ))}
                 {provided.placeholder}
@@ -45,7 +45,7 @@ const TasksList = ({
           )}
         </Droppable>
 
-        <Droppable droppableId="markCompleted">
+        <Droppable droppableId="completed">
           {(provided) => (
             <div
               className="completed-tasks-container"
@@ -61,7 +61,7 @@ const TasksList = ({
                     task={task}
                     tasks={completedTasks}
                     setTasks={setCompletedTasks}
-                    key={`${task._id}`}
+                    key={task._id}
                   />
                 ))}
                 {provided.placeholder}

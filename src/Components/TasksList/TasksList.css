@@ -37,6 +37,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
+  align-content: flex-start;
   justify-content: flex-start;
 
   /* box-shadow: inset 0rem -5rem 2rem -2rem var(--primary-color);

@@ -16,7 +16,7 @@ const TaskTemplate = ({ index, task, tasks, setTasks }: Props) => {
   const [isEditable, setIsEditable] = useState(false);
   const [editTitle, setEditTitle] = useState(task.taskTitle);
 
-  const handleEdit = (id: Date) => {
+  const handleEdit = (id: string) => {
     const updatedTaskTitle = tasks.map((task) =>
       task._id === id ? { ...task, taskTitle: editTitle } : task
     );
@@ -25,7 +25,7 @@ const TaskTemplate = ({ index, task, tasks, setTasks }: Props) => {
     // setIsEditable(false);
   };
 
-  const handleDone = (id: Date) => {
+  const handleDone = (id: string) => {
     const updatedTasks = tasks.map((task) =>
       task._id === id ? { ...task, isCompleted: !task.isCompleted } : task
     );
@@ -33,14 +33,14 @@ const TaskTemplate = ({ index, task, tasks, setTasks }: Props) => {
     saveTasks([...updatedTasks]);
   };
 
-  const handleDelete = (id: Date) => {
+  const handleDelete = (id: string) => {
     const updatedTasks = tasks.filter((task) => task._id !== id);
     setTasks(updatedTasks);
     saveTasks([...updatedTasks]);
   };
 
   return (
-    <Draggable draggableId={`${task._id}`} index={index}>
+    <Draggable draggableId={`${task._id}`} index={index} key={task._id}>
       {(porvided, snapshot) => (
         <div
           ref={porvided.innerRef}

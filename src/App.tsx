@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import "./App.css";
 import AddTasks from "./Components/AddTasks/AddTasks";
-import { Task, saveTasks } from "./Models";
+import { Task, saveCompletedTasks, saveTasks } from "./Models";
 import TasksList from "./Components/TasksList/TasksList";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 const App: React.FC = () => {
   const [taskTitle, setTaskTitle] = useState<string>("");
@@ -14,14 +15,17 @@ const App: React.FC = () => {
     getTasks == null ? [] : JSON.parse(getTasks)
   );
 
-  const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  const getCompletedTasks = localStorage.getItem("completedTasks");
+  const [completedTasks, setCompletedTasks] = useState<Task[]>(
+    getCompletedTasks === null ? [] : JSON.parse(getCompletedTasks)
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (taskTitle) {
       const newTask: Task = {
-        _id: new Date(),
+        _id: uuid(),
         taskTitle,
         taskNote,
         isCompleted: false,
@@ -48,7 +52,7 @@ const App: React.FC = () => {
       uncompletedTasks = tasks,
       completedTasksArr = completedTasks;
 
-    if (source.droppableId === "markNotCompleted") {
+    if (source.droppableId === "uncompleted") {
       grabedTask = uncompletedTasks[source.index];
       uncompletedTasks.splice(source.index, 1);
     } else {
@@ -56,12 +60,19 @@ const App: React.FC = () => {
       completedTasksArr.splice(source.index, 1);
     }
 
-    if (destination.droppableId === "markNotCompleted")
+    if (destination.droppableId === "uncompleted") {
+      grabedTask.isCompleted = false;
       uncompletedTasks.splice(destination.index, 0, grabedTask);
-    else completedTasksArr.splice(destination.index, 0, grabedTask);
+    } else {
+      grabedTask.isCompleted = true;
+      completedTasksArr.splice(destination.index, 0, grabedTask);
+    }
 
     setCompletedTasks(completedTasksArr);
+    saveCompletedTasks(completedTasksArr);
+
     setTasks(uncompletedTasks);
+    saveTasks(uncompletedTasks);
   };
 
   return (
